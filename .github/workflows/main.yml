@@ -15,7 +15,6 @@ jobs:
 
       - name: Reorganize Project Structure
         run: |
-          # Create expected subfolder layout
           mkdir -p src/context src/components src/lib supabase/migrations android/app/src/main/java/com/poolpal/app android/app/src/main/res/layout android/app/src/main/res/values android/app/src/main/res/mipmap-anydpi-v26 android/gradle/wrapper
           
           # Move context modules
@@ -63,6 +62,8 @@ jobs:
 
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
+        with:
+          cmdline-tools-version: '11076708_latest'
 
       - name: Sync Capacitor
         run: npx cap sync android
