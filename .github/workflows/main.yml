@@ -13,6 +13,26 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Reorganize Project Structure
+        run: |
+          mkdir -p src supabase/migrations android/app/src/main/java/com/poolpal/app android/app/src/main/res/layout android/app/src/main/res/values android/app/src/main/res/mipmap-anydpi-v26 android/gradle/wrapper
+          
+          # Move React source files
+          mv App.tsx AuthContext.tsx AuthScreen.tsx DriverDashboard.tsx FindRides.tsx Header.tsx MyRequests.tsx NotificationBell.tsx OfferRide.tsx RequestSeatModal.tsx index.css main.tsx supabase.ts ui.tsx vite-env.d.ts src/ 2>/dev/null || true
+          
+          # Move database migrations
+          mv 2026*.sql supabase/migrations/ 2>/dev/null || true
+          
+          # Move Android config & Gradle files
+          mv AndroidManifest.xml android/app/src/main/ 2>/dev/null || true
+          mv MainActivity.java android/app/src/main/java/com/poolpal/app/ 2>/dev/null || true
+          mv activity_main.xml android/app/src/main/res/layout/ 2>/dev/null || true
+          mv strings.xml styles.xml android/app/src/main/res/values/ 2>/dev/null || true
+          mv ic_launcher*.xml android/app/src/main/res/mipmap-anydpi-v26/ 2>/dev/null || true
+          mv build.gradle capacitor.build.gradle capacitor.settings.gradle settings.gradle variables.gradle proguard-rules.pro file_paths.xml android/ 2>/dev/null || true
+          mv gradlew gradlew.bat android/ 2>/dev/null || true
+          mv gradle-wrapper.jar gradle-wrapper.properties android/gradle/wrapper/ 2>/dev/null || true
+
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
