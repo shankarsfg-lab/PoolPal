@@ -15,10 +15,20 @@ jobs:
 
       - name: Reorganize Project Structure
         run: |
-          mkdir -p src supabase/migrations android/app/src/main/java/com/poolpal/app android/app/src/main/res/layout android/app/src/main/res/values android/app/src/main/res/mipmap-anydpi-v26 android/gradle/wrapper
+          # Create expected subfolder layout
+          mkdir -p src/context src/components src/lib supabase/migrations android/app/src/main/java/com/poolpal/app android/app/src/main/res/layout android/app/src/main/res/values android/app/src/main/res/mipmap-anydpi-v26 android/gradle/wrapper
           
-          # Move React source files
-          mv App.tsx AuthContext.tsx AuthScreen.tsx DriverDashboard.tsx FindRides.tsx Header.tsx MyRequests.tsx NotificationBell.tsx OfferRide.tsx RequestSeatModal.tsx index.css main.tsx supabase.ts ui.tsx vite-env.d.ts src/ 2>/dev/null || true
+          # Move context modules
+          mv AuthContext.tsx src/context/ 2>/dev/null || true
+          
+          # Move component modules
+          mv AuthScreen.tsx DriverDashboard.tsx FindRides.tsx Header.tsx MyRequests.tsx NotificationBell.tsx OfferRide.tsx RequestSeatModal.tsx ui.tsx src/components/ 2>/dev/null || true
+          
+          # Move Supabase lib file
+          mv supabase.ts src/lib/ 2>/dev/null || true
+          
+          # Move top-level React files
+          mv App.tsx index.css main.tsx vite-env.d.ts src/ 2>/dev/null || true
           
           # Move database migrations
           mv 2026*.sql supabase/migrations/ 2>/dev/null || true
